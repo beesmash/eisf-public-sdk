@@ -1,0 +1,10 @@
+{
+  "event": {"statement": "A dependency introduced a breaking API change."},
+  "impacts": [{"statement": "Builds may fail after an untested upgrade."}],
+  "scenarios": [{"statement": "Pin the current version temporarily while testing the migration."}],
+  "adaptations": [{"statement": "Add compatibility tests and migrate in a dedicated branch."}],
+  "decision": {
+    "statement": "Pin now and migrate after compatibility tests pass.",
+    "status": "decided"
+  }
+}
