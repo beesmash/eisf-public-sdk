@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 import shlex
 import subprocess
+from pathlib import Path
 import sys
 
+from .conformance import SUITE_VERSION, fixtures, run_internal_suite
 from .core import SDK_VERSION, build_prompt, validate_case
 from .providers import provider_from_name
 
@@ -51,23 +52,21 @@ def _validate(args) -> int:
 
 
 def _conformance(args) -> int:
-    root = Path(__file__).resolve().parents[2]
-    manifest_path = root / "conformance" / "manifest.json"
-    if not manifest_path.exists():
-        manifest_path = Path("conformance/manifest.json")
-    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-    passed = 0
-
-    for item in manifest["fixtures"]:
-        case = json.loads((manifest_path.parent / item["file"]).read_text(encoding="utf-8"))
-        expected = bool(item["valid"])
-        if args.driver:
+    if not args.driver:
+        passed, total, results = run_internal_suite()
+        for fixture_id, ok in results:
+            print(f"{fixture_id} {'PASS' if ok else 'FAIL'}")
+    else:
+        passed = 0
+        all_fixtures = fixtures()
+        total = len(all_fixtures)
+        for fixture_id, case, expected in all_fixtures:
             proc = subprocess.run(
                 shlex.split(args.driver),
                 input=json.dumps({"operation": "validate", "case": case}),
                 capture_output=True,
                 text=True,
-                timeout=30
+                timeout=30,
             )
             try:
                 response = json.loads(proc.stdout)
@@ -76,17 +75,13 @@ def _conformance(args) -> int:
                     actual = False
             except json.JSONDecodeError:
                 actual = False
-        else:
-            actual = validate_case(case).valid
+            ok = actual == expected
+            passed += int(ok)
+            print(f"{fixture_id} {'PASS' if ok else 'FAIL'}")
 
-        ok = actual == expected
-        passed += int(ok)
-        print(f"{item['id']} {'PASS' if ok else 'FAIL'}")
-
-    total = len(manifest["fixtures"])
     print(f"CONFORMANCE: {passed} / {total} PASS")
     if passed == total:
-        print("EISf Core Compatible — Self-Tested against EISf Conformance Suite v0.1")
+        print(f"EISf Core Compatible — Self-Tested against EISf Conformance Suite v{SUITE_VERSION}")
         return 0
     return 1
 
