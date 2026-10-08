@@ -51,6 +51,40 @@ def _validate(args) -> int:
     return 1
 
 
+def _run_driver(command: str, case: dict) -> tuple[bool, bool]:
+    """Return (protocol_ok, valid_result)."""
+    try:
+        proc = subprocess.run(
+            shlex.split(command),
+            input=json.dumps({"operation": "validate", "case": case}),
+            capture_output=True,
+            text=True,
+            timeout=30,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return False, False
+
+    if proc.returncode != 0:
+        return False, False
+
+    try:
+        response = json.loads(proc.stdout)
+    except json.JSONDecodeError:
+        return False, False
+
+    if not isinstance(response, dict) or not isinstance(response.get("valid"), bool):
+        return False, False
+
+    if response["valid"]:
+        if not isinstance(response.get("case"), dict):
+            return False, False
+    else:
+        if "errors" in response and not isinstance(response["errors"], list):
+            return False, False
+
+    return True, response["valid"]
+
+
 def _conformance(args) -> int:
     if not args.driver:
         passed, total, results = run_internal_suite()
@@ -61,23 +95,11 @@ def _conformance(args) -> int:
         all_fixtures = fixtures()
         total = len(all_fixtures)
         for fixture_id, case, expected in all_fixtures:
-            proc = subprocess.run(
-                shlex.split(args.driver),
-                input=json.dumps({"operation": "validate", "case": case}),
-                capture_output=True,
-                text=True,
-                timeout=30,
-            )
-            try:
-                response = json.loads(proc.stdout)
-                actual = bool(response.get("valid"))
-                if actual and not isinstance(response.get("case"), dict):
-                    actual = False
-            except json.JSONDecodeError:
-                actual = False
-            ok = actual == expected
+            protocol_ok, actual = _run_driver(args.driver, case)
+            ok = protocol_ok and actual == expected
             passed += int(ok)
-            print(f"{fixture_id} {'PASS' if ok else 'FAIL'}")
+            suffix = "" if protocol_ok else " (driver protocol failure)"
+            print(f"{fixture_id} {'PASS' if ok else 'FAIL'}{suffix}")
 
     print(f"CONFORMANCE: {passed} / {total} PASS")
     if passed == total:
