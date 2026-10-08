@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use EISf Public Canon or EISf Public SDK, please cite this software."
+title: "EISf Public SDK"
+version: "0.1.0"
+date-released: "2026-10-08"
+type: software
+authors:
+  - family-names: Brown
+    given-names: Erick Lester
+affiliation: "Beesmash Inc."
+license: Apache-2.0
+abstract: "Provider-neutral public SDK for the EISf reasoning canon: Event → Impact → Scenario → Adaptation → Decision."
+repository-code: "https://github.com/beesmash/eisf-public-sdk"
