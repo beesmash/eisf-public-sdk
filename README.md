@@ -1,5 +1,9 @@
 # EISf Public SDK
 
+[![CI](https://github.com/beesmash/eisf-public-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/beesmash/eisf-public-sdk/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
+
 **Event → Impact → Scenario → Adaptation → Decision**
 
 A public, provider-neutral framework and developer SDK for structured reasoning, decision support, AI-assisted analysis, and software workflows.
@@ -81,3 +85,13 @@ See [PUBLIC_PRIVATE_BOUNDARY.md](PUBLIC_PRIVATE_BOUNDARY.md). Compatibility with
 
 **EISf Public Canon — Event → Impact → Scenario → Adaptation → Decision**  
 Erick Lester Brown / Beesmash Inc.
+
+## Citation
+
+GitHub can read the repository's [`CITATION.cff`](CITATION.cff). For human-readable attribution:
+
+> EISf Public Canon — Event → Impact → Scenario → Adaptation → Decision. Erick Lester Brown / Beesmash Inc.
+
+## Release history
+
+See [CHANGELOG.md](CHANGELOG.md).
