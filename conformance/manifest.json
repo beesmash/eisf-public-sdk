@@ -1,0 +1,13 @@
+{
+  "suite": "EISf Conformance Suite v0.1",
+  "fixtures": [
+    {"id": "01-valid-minimal", "file": "fixtures/01-valid-minimal.json", "valid": true},
+    {"id": "02-valid-rich", "file": "fixtures/02-valid-rich.json", "valid": true},
+    {"id": "03-valid-deferred", "file": "fixtures/03-valid-deferred.json", "valid": true},
+    {"id": "04-missing-decision", "file": "fixtures/04-missing-decision.json", "valid": false},
+    {"id": "05-empty-impacts", "file": "fixtures/05-empty-impacts.json", "valid": false},
+    {"id": "06-empty-event", "file": "fixtures/06-empty-event.json", "valid": false},
+    {"id": "07-malformed-scenario", "file": "fixtures/07-malformed-scenario.json", "valid": false},
+    {"id": "08-invalid-confidence", "file": "fixtures/08-invalid-confidence.json", "valid": false}
+  ]
+}

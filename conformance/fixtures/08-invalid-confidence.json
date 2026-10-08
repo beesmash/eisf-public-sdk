@@ -1,0 +1,1 @@
+{"event":{"statement":"A change occurred.","confidence":1.2},"impacts":[{"statement":"A system is affected."}],"scenarios":[{"statement":"A branch is plausible."}],"adaptations":[{"statement":"A mitigation exists."}],"decision":{"statement":"Proceed."}}

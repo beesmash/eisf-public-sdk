@@ -1,0 +1,1 @@
+{"event":{"statement":"A proposed dependency is under evaluation."},"impacts":[{"statement":"Adoption could change build behavior."}],"scenarios":[{"statement":"The dependency passes evaluation."}],"adaptations":[{"statement":"Run compatibility and security tests."}],"decision":{"statement":"Defer adoption until test results are available.","status":"deferred"}}
