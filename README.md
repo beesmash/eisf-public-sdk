@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/beesmash/eisf-public-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/beesmash/eisf-public-sdk/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-
+[![Release](https://img.shields.io/github/v/release/beesmash/eisf-public-sdk)](https://github.com/beesmash/eisf-public-sdk/releases/latest)
 
 **Event → Impact → Scenario → Adaptation → Decision**
 
@@ -22,6 +22,27 @@ Originated by **Erick Lester Brown / Beesmash Inc.**
 
 EISf is the reasoning contract, not the model.
 
+## Start here
+
+For a first run, see [docs/QUICKSTART.md](docs/QUICKSTART.md).
+
+Python:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -e .
+python examples/hello_world.py
+```
+
+TypeScript:
+
+```bash
+cd typescript
+npm install
+npm run hello
+```
+
 ## SDK v0.1.0
 
 The public SDK provides:
@@ -36,16 +57,13 @@ The public SDK provides:
 - conformance suite for **EISf Core Compatible**
 - GitHub CI and release workflows
 
-## Python quick start
+## CLI
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -e .
-
 eisf validate examples/basic_case.json
 eisf analyze "A dependency introduced a breaking API change" --provider mock
 eisf dev "Add passwordless authentication" --provider mock
+eisf conformance
 ```
 
 OpenAI:
@@ -74,6 +92,10 @@ This is a self-test compatibility claim, **not independent certification**.
 ## Public / private boundary
 
 See [PUBLIC_PRIVATE_BOUNDARY.md](PUBLIC_PRIVATE_BOUNDARY.md). Compatibility with the public EISf canon does not imply equivalence with JANUS, KRONOS, JANUS FORGE, or another proprietary Beesmash implementation.
+
+## Release verification
+
+The v0.1.0 tag, CI state, artifact names, and SHA-256 digests are recorded in [docs/RELEASE_VERIFICATION_v0.1.0.md](docs/RELEASE_VERIFICATION_v0.1.0.md).
 
 ## Status
 
