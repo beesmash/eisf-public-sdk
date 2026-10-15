@@ -11,3 +11,4 @@ typescript/dist/
 .DS_Store
 .env
 .env.*
+.research/
